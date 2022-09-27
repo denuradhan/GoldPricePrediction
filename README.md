@@ -41,25 +41,25 @@ Pada submission ini, dataset diambil dari [Kaggle](https://www.kaggle.com) yang 
   
 <br>
 
-![Image data Overview](https://github.com/denuradhan/GoldPricePrediction/blob/master/assets/data_overview.png?raw=true)
+![Image data Overview](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/data_overview.png?raw=true)
 
 
 Dari data tersebut, terlihat bahwa rata-rata harga saham TLKM disajikan sangat lengkap mulai dari Harga Open sampai Adj Close nya periode 2004 sampai 2020. Disertai dengan informasi penting lainnya, seperti harga saham tertinggi dan terendah dalam durasi tersebut.
 
-![Grafik Saham TLKM 2004 - 2021](https://github.com/denuradhan/GoldPricePrediction/blob/master/assets/data_understanding.png?raw=true)
+![Grafik Saham TLKM 2004 - 2021](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/data_understanding.png?raw=true)
 
 Dari grafik tersebut, dapat diambil kesimpulan bahwa harga saham TLKM mengalami perubahan secara signifikan dalam durasi tersebut. Pada tahun 2004 sampai 2008 merupakan lonjakan harga saham TLKM pertama, kemudian terjadi peningkatan yang sangat drastis di tahun 2012 - Q1 2018. Kemudian mengalami penurunan yang cukup signifikan di akhir tahun 2019 sampai 2 Oktober 2020 karena pengaruh COVID-19.
 
 Sebelum melanjutkan ke tahap preparation, kita perlu untuk melihat korelasi antar fitur yang mempengaruhi pergerakan saham berdasarkan dataset yang ada. Saya mencoba menyajikan korelasi tersebut dalam bentuk heatmap agar dapat dipetakan dengan jelas. 
 
-![Heatmap korelasi antar fitur](https://github.com/denuradhan/GoldPricePrediction/blob/master/assets/korelasi_antar_fitur.png?raw=true)
+![Heatmap korelasi antar fitur](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/korelasi_antar_fitur.png?raw=true)
 
 ## Data Preparation
 Dalam tahap ini, saya menyiapkan dataframe yang telah menyimpan data dari CSV tersebut untuk dilakukan beberapa pengecekan, pertama kita perlu memeriksa adanya null values. Ini perlu dilakukan untuk menjaga akurasi dari prediksi model yang akan kita lakukan di proses pelatihan data. 
 
 Berikut hasil cek data null oleh library **pandas** : <br>
 
-![Check null values](https://github.com/denuradhan/GoldPricePrediction/blob/master/assets/missing_value.png?raw=true)
+![Check null values](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/missing_value.png?raw=true)
 
 Dari 3980 data, terdapat 3944 data yang tidak ada null valuesnya, ini artinya ada beberapa data yang null. Untuk mengatasinya, kita bisa menghapus row yang null dengan **dropna()** dari library **pandas**
 
@@ -72,11 +72,11 @@ df_new
 
 Kemudian, kita cek juga untuk duplikasi data. Berikut hasil cek duplikasi data oleh library **pandas** : <br>
 
-![Check duplicate values](https://github.com/denuradhan/GoldPricePrediction/blob/master/assets/check_duplicate_value.png?raw=true)
+![Check duplicate values](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/check_duplicate_value.png?raw=true)
 
 Langkah berikutnya adalah reduksi dimensi dengan menggunakan PCA. Dari Heatmap korelasi di bagian Data Understanding, dapat kita simpulkan bahwa kolom yang mempunyai korelasi rendah adalah kolom 'Volume'. Setelah menghapus kolom tersebut, tersisa kolom 'Low', 'Open','High','Close', dan 'Adj Close'. Untuk meningkatkan efisiensi pelatihan model dengan cara meminimalisasi fitur yang digunakan tanpa menghapus informasi yang ada didalamnya
 
-![Reduksi Dimensi PCA](https://github.com/denuradhan/GoldPricePrediction/blob/master/assets/PCA_dimensional_reduction.png?raw=true)
+![Reduksi Dimensi PCA](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/PCA_dimensional_reduction.png?raw=true)
 
 Selain pengecekan data dan pembagian dataset ke data latih dan data uji, kita juga perlu untuk mengatur skala data. Hal ini perlu dilakukan agar skor MAE kita tidak menjadi terlalu besar, jika hal ini terjadi, akan mengakibatkan prediksi kita sangat buruk. 
 
@@ -99,21 +99,21 @@ Semakin kompleks sebuah model ML, maka kemungkinan model tersebut mengalami over
 ## Model Evaluation
 
 Berikut visualisasi untuk nilai MAE dan loss value di tahap pelatihan dan pengujian <br><br>
-![Model Evaluation Result](https://github.com/denuradhan/GoldPricePrediction/blob/master/assets/model_evaluation.png?raw=true)
+![Model Evaluation Result](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/model_evaluation.png?raw=true)
 
 Berikut visualisasi untuk prediksi data latih harga saham TLKM dibandingkan dengan data aslinya dalam periode 15 Desember 2011 - 21 Desember 2012 (80% dataset) <br><br>
-![Prediction Result](https://github.com/denuradhan/GoldPricePrediction/blob/master/assets/model_prediction.png?raw=true)
+![Prediction Result](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/model_prediction.png?raw=true)
 
 
 ## Evaluation
 
 - ***Mean Absolute Error*** <br><br>
-![MAE Formula](https://github.com/denuradhan/GoldPricePrediction/blob/master/assets/MAE_Formula.png?raw=true)
+![MAE Formula](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/MAE_Formula.png?raw=true)
 
 Metrik ini digunakan untuk mengetahui kesalahan model atau memberitahu seberapa besar error model yang sudah di latih kepada data yang akan diuji.
 
 - ***Mean Squared Error***:  <br><br>
-![MSE Formula](https://github.com/denuradhan/GoldPricePrediction/blob/master/assets/MSE.png?raw=true)<br>
+![MSE Formula](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/MSE.png?raw=true)<br>
 Fungsi loss yang paling sederhana dan sering digunakan untuk kasus regresi
 
 <br>
