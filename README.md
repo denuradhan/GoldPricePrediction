@@ -119,4 +119,6 @@ Fungsi loss yang paling sederhana dan sering digunakan untuk kasus regresi
 <br>
 
 ## Penutup
-Demikian laporan dan metrik dari implementasi Machine Learning untuk analisis harga saham TLKM oleh PT. Telkom Indonesia Tbk. Terimakasih telah membaca laporan ini, semoga bermanfaat.
+Demikian laporan dan metrik dari implementasi Machine Learning untuk analisis harga emas. 
+
+Terimakasih.
