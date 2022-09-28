@@ -37,12 +37,12 @@ Pada submission ini, dataset diambil dari [Kaggle](https://www.kaggle.com) yang 
 
 <br>
 
-![Image data Overview](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/data_overview.png?raw=true)
+![Image data Overview](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/data_overview.png?raw=true)<br>
 Gambar 1. menampilkan informasi tentang DataFrame 
 
 Dari Gambar 1. terlihat bahwa rata-rata harga emas disajikan sangat lengkap mulai dari Harga Open sampai Adj Close nya periode 2012 sampai 2019. Disertai dengan informasi penting lainnya, seperti harga tertinggi dan terendah dalam durasi tersebut.
 
-![Grafik Saham emas 2012 - 2019](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/data_understanding.png?raw=true)
+![Grafik Saham emas 2012 - 2019](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/data_understanding.png?raw=true)<br>
 Gambar 2. Grafik harga emas berdasarkan harga awal, akhir dan tertinggi
 
 Dari Gambar 2. dapat diambil kesimpulan bahwa harga emas mengalami perubahan secara signifikan dalam durasi tersebut. Pada tahun 2012 merupakan lonjakan harga saham emas pertama, kemudian terjadi penurunan yang sangat drastis di tahun 2013.
@@ -93,21 +93,26 @@ Semakin kompleks sebuah model ML, maka kemungkinan model tersebut mengalami _ove
 ## Model Evaluation
 
 Berikut visualisasi untuk nilai MAE dan _loss value_ di tahap pelatihan dan pengujian <br><br>
-![Model Evaluation Result](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/model_evaluation.png?raw=true)
+![Model Evaluation Result](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/model_evaluation.png?raw=true)<br>
+Gambar 7. Hasil Evaluasi Model
 
 Berikut visualisasi untuk prediksi data latih harga emas dibandingkan dengan data aslinya dalam periode 15 Desember 2011 - 21 Desember 2012 (80% dataset) <br><br>
-![Prediction Result](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/model_prediction.png?raw=true)
+![Prediction Result](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/model_prediction.png?raw=true)<br>
+Gambar 8. Hasil prediksi
 
 
 ## Evaluation
 
 - ***Mean Absolute Error*** <br><br>
-![MAE Formula](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/MAE_Formula.png?raw=true)
+![MAE Formula](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/MAE_Formula.png?raw=true)<br>
+Gambar 9. Formula MAE
 
 Metrik ini digunakan untuk mengetahui kesalahan model atau memberitahu seberapa besar error model yang sudah di latih kepada data yang akan diuji.
 
 - ***Mean Squared Error***:  <br><br>
 ![MSE Formula](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/MSE.png?raw=true)<br>
+Gambar 10. Formula MSE
+
 Fungsi loss yang paling sederhana dan sering digunakan untuk kasus regresi.
 
 <br>
