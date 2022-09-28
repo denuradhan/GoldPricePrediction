@@ -148,8 +148,9 @@ Metrik ini digunakan untuk mengetahui kesalahan model atau memberitahu seberapa 
 ![MSE Formula](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/MSE.png?raw=true)<br>
 Gambar 7. Formula MSE
 
-Fungsi loss yang paling sederhana dan sering digunakan untuk kasus regresi.
+Merubapan sebuah Fungsi loss yang paling sederhana dan sering digunakan untuk kasus regresi.
 
+Model deep learning yang telah dibuat dapat melakukan proses training data dengan metrik dan loss function tersebut. Dalam prosesnya, terlihat hasil MAE yang relatif kecil yaitu sekitar 0.0316. Hal ini menunjukan bahwa model ini memiliki error 
 <br>
 
 ## Penutup
