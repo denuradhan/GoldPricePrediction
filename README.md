@@ -36,9 +36,18 @@ Pada submission ini, dataset diambil dari [Kaggle](https://www.kaggle.com) yang 
   * Volume - Jumlah transaksi emas di tanggal tersebut (datatype : float64)
 
 <br>
-
-![Image data Overview](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/data_overview.png?raw=true)<br>
 Tabel 1. menampilkan informasi tentang DataFrame 
+
+|       |Open       |High       |Low        |Close      |Adj Close  |Volume      |
+|-------|-----------|-----------|-----------|-----------|-----------|------------|
+|count  |1718.000000|1718.000000|1718.000000|1718.000000|1718.000000|1.718000e+03|
+|mean   |127.323434	|127.854237	|126.777695	|127.319482	|127.319482	|8.446327e+06|
+|std    |17.526993	|17.631189	|17.396513	|17.536269	|17.536269	|4.920731e+06|
+|min    |100.919998	|100.989998	|100.230003	|100.500000	|100.500000	|1.501600e+06|
+|25%    |116.220001	|116.540001	|115.739998	|116.052502	|116.052502	|5.412925e+06|
+|50%    |121.915001	|122.325001	|121.369999	|121.795002	|121.795002	|7.483900e+06|
+|75%    |128.427494	|129.087498	|127.840001	|128.470001	|128.470001	|1.020795e+07|
+|max    |173.199997	|174.070007	|172.919998	|173.610001	|173.610001	|9.380420e+07|<br>
 
 Dari Gambar 1. terlihat bahwa rata-rata harga emas disajikan sangat lengkap mulai dari Harga Open sampai Adj Close nya periode 2012 sampai 2019. Disertai dengan informasi penting lainnya, seperti harga tertinggi dan terendah dalam durasi tersebut.
 
@@ -69,8 +78,22 @@ Gambar 4. Mengecek Data yang kembar (duplikasi)
 
 Langkah berikutnya adalah reduksi dimensi dengan menggunakan PCA. Dari _Heatmap_ korelasi di bagian _Data Understanding_, dapat kita simpulkan bahwa kolom yang mempunyai korelasi rendah adalah kolom `'Volume'`. Setelah menghapus kolom tersebut, tersisa kolom ```'Low'```, `'Open'`,`'High'`,`'Close'`, dan `'Adj Close'`. Untuk meningkatkan efisiensi pelatihan model dengan cara meminimalisasi fitur yang digunakan tanpa menghapus informasi yang ada didalamnya
 
-![Reduksi Dimensi PCA](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/PCA_dimensional_reduction.png?raw=true) <br>
+<br>
 Tabel 2. Reduksi Dimensi PCA
+
+|	   |Date      |dimension |
+|----|----------|----------|
+|0	 |2011-12-15|57.904111 |
+|1	 |2011-12-16|61.468551 |
+|2	 |2011-12-19|62.094206 |
+|3	 |2011-12-20|66.273817 |
+|4	 |2011-12-21|66.351704 |
+|... |...       |	...      |
+|1713|2018-12-24|-16.670848|
+|1714|2018-12-26|-16.136585|
+|1715|2018-12-27|-15.136428|
+|1716|2018-12-28|-14.256552|
+|1717|2018-12-31|-13.876186|
 
 Selain pengecekan data dan pembagian dataset ke data latih dan data uji, kita juga perlu untuk mengatur skala data. Hal ini perlu dilakukan agar skor MAE kita tidak menjadi terlalu besar, jika hal ini terjadi, akan mengakibatkan prediksi kita sangat buruk. 
 
@@ -96,11 +119,13 @@ Berikut visualisasi untuk nilai MAE dan _loss value_ di tahap pelatihan dan peng
 ![Model Evaluation Result](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/model_evaluation.png?raw=true)<br>
 Gambar 5. Hasil Evaluasi Model
 
+Gambar 5. Menunjukan Hasil evaluasi pelatihan model yang cukup akurat untuk memprediksi harga emas dengan nilai MAE 0.0316 dan nilai MSE sebesar 0.0019
+
 Berikut visualisasi untuk prediksi data latih harga emas dibandingkan dengan data aslinya dalam periode 15 Desember 2011 - 21 Desember 2012 (80% dataset) <br><br>
 ![Prediction Result](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/model_prediction.png?raw=true)<br>
 Gambar 6. Hasil prediksi
 
-Gambar 6. Menunjukan Hasil Prediksi yang cukup akurat untuk memprediksi harga emas dengan nilai MAE 0.0316
+
 
 ## Evaluation
 
