@@ -100,6 +100,7 @@ Berikut visualisasi untuk prediksi data latih harga emas dibandingkan dengan dat
 ![Prediction Result](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/model_prediction.png?raw=true)<br>
 Gambar 6. Hasil prediksi
 
+Gambar 6. Menunjukan Hasil Prediksi yang cukup akurat untuk memprediksi harga emas dengan nilai MAE 0.0316
 
 ## Evaluation
 
