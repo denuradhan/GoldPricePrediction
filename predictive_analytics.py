@@ -11,23 +11,38 @@ Original file is located at
 Tutorial download kaggle dataset melalui google colab
 
 https://www.analyticsvidhya.com/blog/2021/06/how-to-load-kaggle-datasets-directly-into-google-colab/
+
+Install package `kaggle` untuk mendownload dataset melalui kaggle
 """
 
 ! pip install kaggle
 
+"""Upload `kaggle.json` yang didapatkan dari API token di akun kaggle masing masing"""
+
 from google.colab import files
 uploaded = files.upload()
+
+"""Tambahkan `kaggle.json` kedalam source milik google colab agar package bisa mendownload dataset menggunakan akun dan API key milik Kaggle"""
 
 ! mkdir ~/.kaggle
 ! cp kaggle.json ~/.kaggle/
 ! chmod 600 ~/.kaggle/kaggle.json
 
+"""Download Dataset dengan menjalankan perintah dibawah :
+
+(link alternatif) :  
+https://www.kaggle.com/datasets/sid321axn/gold-price-prediction-dataset
+"""
+
 ! kaggle datasets download sid321axn/gold-price-prediction-dataset
+
+"""Unzip dataset"""
 
 ! unzip gold-price-prediction-dataset.zip
 
 """# Import Library
 
+Import Library yang dibutuhkan pada proyek ini
 """
 
 # Import all required libraries
@@ -57,24 +72,42 @@ from keras.callbacks import  EarlyStopping
 """# Data Understanding
 
 Pada Submission ini, dataset diambil dari [Kaggle](https://www.kaggle.com/) dengan nama dataset [Gold Price Prediction Dataset](https://www.kaggle.com/datasets/sid321axn/gold-price-prediction-dataset)
+
+Tampilkan dataset dalam bentuk tabel.
+
+Sesuai yang telah dijelaskan di `Readme.md`. Pada proyek ini menggunakan 6 Kolom termasuk kolom label yang digunakan untuk melakukan prediksi harga emas
+
+diantaranya kolom : `'Date'`, `'Open'`, `'High'`, `'Low'`,`'Close'`,`'Adj Close'` dan `'Volume'`
 """
 
 df = pd.read_csv('/content/FINAL_USO.csv', parse_dates=True, squeeze=True)
 df = df[['Date', 'Open', 'High', 'Low','Close','Adj Close', 'Volume']]
 df.head()
 
+"""Berikut adalah total data dan _range_ tanggal dari dataset yang telah di _load_"""
+
 print("Total Data : {} \n".format(len(df)))
 print("Date range from : {} to {}".format(df.head(1)['Date'].values, df.tail(1)['Date'].values))
 
+"""Kode program dibawah digunakan untuk melihat informasi kolom dan juga melihat jumlah _record_ yang memiliki data"""
+
 df.info()
+
+"""apabila terdapat record yang nilainya dibawah panjang record (> 1718) maka hapus record tersebut dengan menjalankan kode program dibawah"""
 
 df_new = df.dropna(how='any',axis=0) 
 df_new
 
+"""Kode program dibawah digunakan untuk menampilan statistik deskriptif mencakup statistik yang merangkum kecenderungan sentral, dispersi, dan bentuk distribusi himpunan data"""
+
 df_new.describe()
+
+"""Rubah format tanggal yang sebelumnya masih `text` / `string` menjadi format `date`"""
 
 df_new['Date'] = pd.to_datetime(df_new['Date'] , format='%Y-%m-%d')
 df_new['Date']
+
+"""Tampilkan visualisasi dalam bentuk grafik dengan `y-axis` berisi kolom `'Open'`, `'Close'`, `'High'` dan nilai `x-axis` dengan nilai `'Date'`"""
 
 visual_plot =df_new[['Date','Close', 'Open', 'High']]
 
@@ -88,10 +121,15 @@ plt.xlabel('Tahun', fontsize=20)
 plt.ylabel('Harga (Dolar)', fontsize=20)
 plt.legend(['Open','Close','High'], loc='upper right')
 
+"""lihat korelasi antar fitur yang mempengaruhi pergerakan saham berdasarkan dataset yang ada"""
+
 corr = df.corr()
 sns.heatmap(data=corr, annot=True, cmap='Blues', linewidths=0.5)
 
-"""# Data Preparation"""
+"""# Data Preparation
+
+Pastikan dataset terhindar dari _missing value_ dan terdapat duplikasi didalamnya
+"""
 
 df_new.isnull().sum()
 
@@ -99,6 +137,8 @@ check_duplicates = df_new[df_new.duplicated()]
 print(check_duplicates)
 
 df_new_dropped = df_new.drop(['Volume'], axis=1)
+
+"""Reduksi dimensi dengan PCA"""
 
 from sklearn.decomposition import PCA
 pca = PCA(n_components=1, random_state=123)
@@ -109,9 +149,13 @@ df_new_dropped.drop(['Low', 'Open','High','Close', 'Adj Close'], axis=1, inplace
 
 df_new_dropped
 
+"""Rubah Kolom Date Menjadi index"""
+
 df_new_dropped.index = df_new_dropped['Date']
 df_new_dropped = df_new_dropped.drop(columns='Date')
 df_new_dropped
+
+"""Bagi Dataset dengan skala 80:20"""
 
 # Splitting dataset
 train_set = df_new_dropped[:int(len(df_new_dropped)*0.8) :]
@@ -131,16 +175,19 @@ def dataset_preparation(dataset, window):
         label.append(dataset[i+window,0])
     return np.array(dframe), np.array(label)
 
-# MinMax Scaling
+"""Proses MinMax Scaling"""
+
 minmax_scaler = MinMaxScaler()
 scaled_train_set = minmax_scaler.fit_transform(train_set)
 scaled_test_set = minmax_scaler.fit_transform(test_set)
 
-# Prepare dataset with defined window size
+"""Menyiapkan himpunan data dengan ukuran jendela yang ditentukan"""
+
 x_train, y_train = dataset_preparation(scaled_train_set,80)
 x_test, y_test = dataset_preparation(scaled_test_set,80)
 
-# Reshaping
+"""Rubah ulang _shape_ dataset"""
+
 x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1],1))
 x_test = np.reshape(x_test, (x_test.shape[0], x_train.shape[1],1))
 
@@ -151,15 +198,24 @@ print("\n----Splitted Data----")
 print("Train Set shapes : {} {}".format(x_train.shape, y_train.shape))
 print("Test Set shapes : {} {}".format(x_test.shape, y_test.shape))
 
-"""# Arsitektur Model"""
+"""# Arsitektur Model
 
-# Model Architecture
+Susun Arsitektur Model
+* LTSM sebagai input layer
+* Dropout sebagai hidden layer
+* Dense sebagai output layer
+"""
+
 model = Sequential([
   LSTM(60),
   Dropout(0.5),
   Dense(32),
   Dense(1),
 ])
+
+"""Tentukan Algoritma Optimasi dan parameter yang ingin digunakan
+dan kompilasi model dengan menggunakan metriks MAE dan _function loss_ MSE
+"""
 
 # Setting optimizer Adam Optimizer and learning rate
 optimizer = Adam(learning_rate=0.01)
@@ -170,7 +226,12 @@ model.compile(
     optimizer=optimizer,
     loss='mean_squared_error')
 
-"""# Model Training"""
+"""# Model Training
+
+Inisialasi Callback dengan menggunakan EarlyStopping
+
+proses training akan berhenti ketika hasil metriks yang dimonitor tidak berkembang selama 5 epoch
+"""
 
 callbacks = EarlyStopping(
     min_delta=0.001,
@@ -187,6 +248,8 @@ callbacks = EarlyStopping(
 #       print("\nMAE dari model < 1% skala data : ", )
 # callbacks_mae = myCallback()
 
+"""Latih Model dan simpan kedalam variabel `history`"""
+
 # Training Model and save it to history variable.
 history = model.fit(x_train,
                     y_train,
@@ -194,7 +257,10 @@ history = model.fit(x_train,
                     validation_data=(x_test, y_test),
                     callbacks=[callbacks])
 
-"""# Model Evaluation"""
+"""# Model Evaluation
+
+Tampilkan grafik yang menunjukan hasil pelatihan testing dan trainin untuk value dan loss value
+"""
 
 # Create plot for mae and val_mae
 figure, axes = plt.subplots(nrows=2, ncols=2)
@@ -217,7 +283,10 @@ plt.legend(['Training Loss', 'Testing Loss'], loc='upper right')
 
 plt.show()
 
-"""# Model Prediction"""
+"""# Model Prediction
+
+Buat dataframe baru untuk menyimpan  _actual value_ dan _prediction_, lalu tambahkan kolom `'Date'` dari variable df. Setelah semua kolom mempunyai data, kita dapat melihat harga asli dan prediksi harga dari data training yang telah dijalankan
+"""
 
 predict_test = model.predict(x_test)
 predict_test = minmax_scaler.inverse_transform(predict_test)
