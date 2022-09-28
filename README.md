@@ -80,10 +80,7 @@ Tabel 2. Mengecek Data yang kosong
 
 Dari 1718 data, tidak ada data dengan nilai null pada valuesnya, ini artinya ada beberapa data yang null. Apabila terdapat null value bisa menghapus row yang null dengan **dropna()** dari library **pandas**
 
-Kemudian, kita cek juga untuk duplikasi data. Berikut hasil cek duplikasi data oleh library **pandas** : <br>
-
-![Check duplicate values](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/check_duplicate_value.png?raw=true)<br>
-Gambar 3. Mengecek Data yang kembar (duplikasi)
+Kemudian, kita cek juga untuk duplikasi data dengan menggunakan `DataFrame.duplicated()`
 
 Langkah berikutnya adalah reduksi dimensi dengan menggunakan PCA. Dari _Heatmap_ korelasi di bagian _Data Understanding_, dapat kita simpulkan bahwa kolom yang mempunyai korelasi rendah adalah kolom `'Volume'`. Setelah menghapus kolom tersebut, tersisa kolom ```'Low'```, `'Open'`,`'High'`,`'Close'`, dan `'Adj Close'`. Untuk meningkatkan efisiensi pelatihan model dengan cara meminimalisasi fitur yang digunakan tanpa menghapus informasi yang ada didalamnya
 
@@ -137,6 +134,8 @@ Gambar 5. Hasil prediksi
 
 
 ## Evaluation
+
+Matriks Evaluasi yang digunakan pada proyek ini adalah :
 
 - ***Mean Absolute Error*** <br><br>
 ![MAE Formula](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/MAE_Formula.png?raw=true)<br>
