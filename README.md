@@ -38,19 +38,19 @@ Pada submission ini, dataset diambil dari [Kaggle](https://www.kaggle.com) yang 
 <br>
 
 ![Image data Overview](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/data_overview.png?raw=true)<br>
-Gambar 1. menampilkan informasi tentang DataFrame 
+Tabel 1. menampilkan informasi tentang DataFrame 
 
 Dari Gambar 1. terlihat bahwa rata-rata harga emas disajikan sangat lengkap mulai dari Harga Open sampai Adj Close nya periode 2012 sampai 2019. Disertai dengan informasi penting lainnya, seperti harga tertinggi dan terendah dalam durasi tersebut.
 
 ![Grafik Saham emas 2012 - 2019](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/data_understanding.png?raw=true)<br>
-Gambar 2. Grafik harga emas berdasarkan harga awal, akhir dan tertinggi
+Gambar 1. Grafik harga emas berdasarkan harga awal, akhir dan tertinggi
 
 Dari Gambar 2. dapat diambil kesimpulan bahwa harga emas mengalami perubahan secara signifikan dalam durasi tersebut. Pada tahun 2012 merupakan lonjakan harga saham emas pertama, kemudian terjadi penurunan yang sangat drastis di tahun 2013.
 
 Sebelum melanjutkan ke tahap preparation, kita perlu untuk melihat korelasi antar fitur yang mempengaruhi pergerakan saham berdasarkan dataset yang ada. Saya mencoba menyajikan korelasi tersebut dalam bentuk heatmap agar dapat dipetakan dengan jelas. 
 
 ![Heatmap korelasi antar fitur](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/korelasi_antar_fitur.png?raw=true)<br>
-Gambar 3. Heatmap Korelasi Antar Fitur
+Gambar 2. Heatmap Korelasi Antar Fitur
 
 ## Data Preparation
 Dalam tahap ini, saya menyiapkan dataframe yang telah menyimpan data dari CSV tersebut untuk dilakukan beberapa pengecekan, pertama kita perlu memeriksa adanya null values. Ini perlu dilakukan untuk menjaga akurasi dari prediksi model yang akan kita lakukan di proses pelatihan data. 
@@ -58,19 +58,19 @@ Dalam tahap ini, saya menyiapkan dataframe yang telah menyimpan data dari CSV te
 Berikut hasil cek data null oleh library **pandas** : <br>
 
 ![Check null values](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/missing_value.png?raw=true)<br>
-Gambar 4. Mengecek Data yang kosong
+Gambar 3. Mengecek Data yang kosong
 
 Dari 1718 data, tidak ada data dengan nilai null pada valuesnya, ini artinya ada beberapa data yang null. Apabila terdapat null value bisa menghapus row yang null dengan **dropna()** dari library **pandas**
 
 Kemudian, kita cek juga untuk duplikasi data. Berikut hasil cek duplikasi data oleh library **pandas** : <br>
 
 ![Check duplicate values](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/check_duplicate_value.png?raw=true)<br>
-Gambar 5. Mengecek Data yang kembar (duplikasi)
+Gambar 4. Mengecek Data yang kembar (duplikasi)
 
 Langkah berikutnya adalah reduksi dimensi dengan menggunakan PCA. Dari _Heatmap_ korelasi di bagian _Data Understanding_, dapat kita simpulkan bahwa kolom yang mempunyai korelasi rendah adalah kolom `'Volume'`. Setelah menghapus kolom tersebut, tersisa kolom ```'Low'```, `'Open'`,`'High'`,`'Close'`, dan `'Adj Close'`. Untuk meningkatkan efisiensi pelatihan model dengan cara meminimalisasi fitur yang digunakan tanpa menghapus informasi yang ada didalamnya
 
 ![Reduksi Dimensi PCA](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/PCA_dimensional_reduction.png?raw=true) <br>
-Gambar 6. Reduksi Dimensi PCA
+Tabel 2. Reduksi Dimensi PCA
 
 Selain pengecekan data dan pembagian dataset ke data latih dan data uji, kita juga perlu untuk mengatur skala data. Hal ini perlu dilakukan agar skor MAE kita tidak menjadi terlalu besar, jika hal ini terjadi, akan mengakibatkan prediksi kita sangat buruk. 
 
@@ -94,24 +94,24 @@ Semakin kompleks sebuah model ML, maka kemungkinan model tersebut mengalami _ove
 
 Berikut visualisasi untuk nilai MAE dan _loss value_ di tahap pelatihan dan pengujian <br><br>
 ![Model Evaluation Result](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/model_evaluation.png?raw=true)<br>
-Gambar 7. Hasil Evaluasi Model
+Gambar 5. Hasil Evaluasi Model
 
 Berikut visualisasi untuk prediksi data latih harga emas dibandingkan dengan data aslinya dalam periode 15 Desember 2011 - 21 Desember 2012 (80% dataset) <br><br>
 ![Prediction Result](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/model_prediction.png?raw=true)<br>
-Gambar 8. Hasil prediksi
+Gambar 6. Hasil prediksi
 
 
 ## Evaluation
 
 - ***Mean Absolute Error*** <br><br>
 ![MAE Formula](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/MAE_Formula.png?raw=true)<br>
-Gambar 9. Formula MAE
+Gambar 7. Formula MAE
 
 Metrik ini digunakan untuk mengetahui kesalahan model atau memberitahu seberapa besar error model yang sudah di latih kepada data yang akan diuji.
 
 - ***Mean Squared Error***:  <br><br>
 ![MSE Formula](https://github.com/denuradhan/GoldPricePrediction/blob/main/assets/MSE.png?raw=true)<br>
-Gambar 10. Formula MSE
+Gambar 8. Formula MSE
 
 Fungsi loss yang paling sederhana dan sering digunakan untuk kasus regresi.
 
